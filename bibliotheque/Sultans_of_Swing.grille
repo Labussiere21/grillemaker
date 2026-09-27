@@ -1,0 +1,481 @@
+{
+ "version": 1,
+ "title": "Sultans of Swing",
+ "artist": "Dire Straits",
+ "key": "Dm",
+ "tempo": "",
+ "notes": "Fin sur Dm",
+ "sections": [
+  {
+   "id": "4f27a8cc",
+   "type": "Intro",
+   "num": 0,
+   "label": "",
+   "cols": 4,
+   "rows": [
+    [
+     {
+      "chord": "Dm",
+      "start": true,
+      "end": true,
+      "times": 8,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     }
+    ]
+   ],
+   "measures_auto": true,
+   "measures": 0,
+   "comment": ""
+  },
+  {
+   "id": "9e8a7d35",
+   "type": "Couplet",
+   "num": 1,
+   "label": "",
+   "cols": 4,
+   "rows": [
+    [
+     {
+      "chord": "Dm",
+      "start": true,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "C Bb",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "A",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "%",
+      "start": false,
+      "end": true,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     }
+    ],
+    [
+     {
+      "chord": "F",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "%",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "C",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "C",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     }
+    ],
+    [
+     {
+      "chord": "Bb",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "%",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "Dm",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "Dm Bb Bb",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": "syncopé"
+     }
+    ],
+    [
+     {
+      "chord": "C",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "%",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     }
+    ]
+   ],
+   "measures_auto": true,
+   "measures": 0,
+   "comment": ""
+  },
+  {
+   "id": "34700c3d",
+   "type": "Couplet",
+   "num": 2,
+   "label": "",
+   "cols": 4,
+   "rows": [
+    [
+     {
+      "chord": "Dm",
+      "start": true,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "C Bb",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "A",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "%",
+      "start": false,
+      "end": true,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     }
+    ],
+    [
+     {
+      "chord": "F",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "%",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "C",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "C",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     }
+    ],
+    [
+     {
+      "chord": "Bb",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "%",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "Dm",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "Dm Bb Bb",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": "syncopé"
+     }
+    ],
+    [
+     {
+      "chord": "C",
+      "start": true,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "C Bb Bb",
+      "start": false,
+      "end": true,
+      "times": 2,
+      "volta": "1",
+      "note": "syncopé"
+     },
+     {
+      "chord": "C",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "2",
+      "note": ""
+     },
+     {
+      "chord": "",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     }
+    ]
+   ],
+   "measures_auto": true,
+   "measures": 0,
+   "comment": ""
+  },
+  {
+   "id": "8b5c6aa7",
+   "type": "Refrain",
+   "num": 1,
+   "label": "",
+   "cols": 4,
+   "rows": [
+    [
+     {
+      "chord": "Dm",
+      "start": true,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "Bb",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "C",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "C",
+      "start": false,
+      "end": true,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     }
+    ]
+   ],
+   "measures_auto": true,
+   "measures": 0,
+   "comment": ""
+  }
+ ],
+ "structure": [
+  {
+   "type": "Intro",
+   "num": 0,
+   "label": "",
+   "grid": "4f27a8cc",
+   "measures_auto": true,
+   "measures": 0,
+   "note": ""
+  },
+  {
+   "type": "Couplet",
+   "num": 1,
+   "label": "",
+   "grid": "9e8a7d35",
+   "measures_auto": true,
+   "measures": 0,
+   "note": ""
+  },
+  {
+   "type": "Couplet",
+   "num": 2,
+   "label": "",
+   "grid": "34700c3d",
+   "measures_auto": true,
+   "measures": 0,
+   "note": ""
+  },
+  {
+   "type": "Refrain",
+   "num": 1,
+   "label": "",
+   "grid": "8b5c6aa7",
+   "measures_auto": true,
+   "measures": 0,
+   "note": ""
+  },
+  {
+   "type": "Couplet",
+   "num": 3,
+   "label": "",
+   "grid": "9e8a7d35",
+   "measures_auto": true,
+   "measures": 0,
+   "note": ""
+  },
+  {
+   "type": "Couplet",
+   "num": 4,
+   "label": "",
+   "grid": "34700c3d",
+   "measures_auto": true,
+   "measures": 0,
+   "note": ""
+  },
+  {
+   "type": "Refrain",
+   "num": 2,
+   "label": "",
+   "grid": "8b5c6aa7",
+   "measures_auto": true,
+   "measures": 0,
+   "note": ""
+  },
+  {
+   "type": "Solo",
+   "num": 0,
+   "label": "Solo guitare",
+   "grid": "34700c3d",
+   "measures_auto": true,
+   "measures": 0,
+   "note": ""
+  },
+  {
+   "type": "Refrain",
+   "num": 3,
+   "label": "Refrain de fin",
+   "grid": "8b5c6aa7",
+   "measures_auto": true,
+   "measures": 0,
+   "note": ""
+  }
+ ]
+}

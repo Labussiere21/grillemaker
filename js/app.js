@@ -4,31 +4,60 @@
   const M = G.Model;
   const $ = s => document.querySelector(s);
   const $$ = s => Array.from(document.querySelectorAll(s));
-  const STORE = "grillemaker:song";
+  const OLD_STORE = "grillemaker:song";
+  const LIB = "grillemaker:library";
   const PREFS = "grillemaker:prefs";
 
-  const state = { song: null, sec: 0, sel: [0, 0], item: -1, orient: "landscape", tab: "grids" };
+  const state = { song: null, id: null, sec: 0, sel: [0, 0], item: -1, orient: "landscape", tab: "grids" };
+  let lib = { current: null, songs: {} };   // songs[id] = { song, updated }
+
+  const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+  const clone = o => JSON.parse(JSON.stringify(o));
 
   // --------------------------------------------------------------- persistance
+  function writeLib() {
+    try { localStorage.setItem(LIB, JSON.stringify(lib)); }
+    catch (e) { toast("Stockage du navigateur plein : enregistre tes morceaux en .grille."); }
+  }
   let saveTimer = null;
   function persist() {
     clearTimeout(saveTimer);
     saveTimer = setTimeout(() => {
-      try { localStorage.setItem(STORE, JSON.stringify(state.song)); } catch (e) { /* stockage indisponible */ }
-    }, 250);
+      if (!state.id) return;
+      lib.songs[state.id] = { song: state.song, updated: Date.now() };
+      lib.current = state.id;
+      writeLib();
+      if (state.tab === "library") renderLocal();
+    }, 300);
   }
   function savePrefs() {
     try { localStorage.setItem(PREFS, JSON.stringify({ orient: state.orient, tab: state.tab })); } catch (e) { }
   }
-  function loadInitial() {
+  function readStorage() {
     try {
       const p = JSON.parse(localStorage.getItem(PREFS) || "{}");
       if (p.orient) state.orient = p.orient;
       if (p.tab) state.tab = p.tab;
-      const raw = localStorage.getItem(STORE);
-      if (raw) return M.normalize(JSON.parse(raw));
+      const raw = localStorage.getItem(LIB);
+      if (raw) lib = Object.assign({ current: null, songs: {} }, JSON.parse(raw));
+      const old = localStorage.getItem(OLD_STORE);         // migration de la 1re version
+      if (old && !Object.keys(lib.songs).length) {
+        const id = uid();
+        lib.songs[id] = { song: JSON.parse(old), updated: Date.now() };
+        lib.current = id;
+        writeLib();
+        localStorage.removeItem(OLD_STORE);
+      }
     } catch (e) { }
-    return M.normalize(JSON.parse(JSON.stringify(G.EXAMPLE)));
+  }
+  /** Ajoute un morceau à "Sur cet appareil" (ou réutilise un doublon exact) et l'ouvre. */
+  function addAndOpen(song) {
+    const json = JSON.stringify(song);
+    const dup = Object.keys(lib.songs).find(k => JSON.stringify(M.normalize(lib.songs[k].song)) === json);
+    const id = dup || uid();
+    if (!dup) { lib.songs[id] = { song, updated: Date.now() }; }
+    loadSong(M.normalize(clone(lib.songs[id].song)), id);
+    return !!dup;
   }
 
   function toast(msg) {
@@ -53,8 +82,9 @@
   }
 
   // --------------------------------------------------------------- chargement
-  function loadSong(song) {
+  function loadSong(song, id) {
     state.song = song;
+    state.id = id || uid();
     state.sec = song.sections.length ? 0 : -1;
     state.sel = [0, 0];
     state.item = song.structure.length ? 0 : -1;
@@ -80,7 +110,9 @@
     $$(".tab").forEach(b => b.setAttribute("aria-selected", String(b.dataset.tab === tab)));
     $("#tab-grids").hidden = tab !== "grids";
     $("#tab-structure").hidden = tab !== "structure";
+    $("#tab-library").hidden = tab !== "library";
     if (tab === "structure") renderStructure();
+    if (tab === "library") { renderLocal(); loadOnline(); }
     savePrefs();
   }
 
@@ -452,13 +484,199 @@
     const rd = new FileReader();
     rd.onload = () => {
       try {
-        loadSong(M.normalize(JSON.parse(rd.result)));
+        addAndOpen(M.normalize(JSON.parse(rd.result)));
+        setTab("grids");
         toast(`« ${state.song.title || file.name} » ouvert`);
       } catch (e) {
         toast("Ce fichier n'est pas un .grille valide.");
       }
     };
     rd.readAsText(file);
+  }
+
+
+  // --------------------------------------------------------------- morceaux : sur cet appareil
+  const fmtDate = t => new Date(t).toLocaleDateString("fr-FR", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" });
+  const filterText = () => $("#lib-filter").value.trim().toLowerCase();
+  const matches = (title, artist) => { const f = filterText(); return !f || `${title} ${artist}`.toLowerCase().includes(f); };
+
+  function libRow(title, meta, actions, current) {
+    const li = document.createElement("li");
+    if (current) li.className = "current";
+    const info = document.createElement("div");
+    info.className = "info";
+    const t = document.createElement("strong"); t.textContent = title;
+    const m = document.createElement("span"); m.textContent = meta;
+    info.append(t, m);
+    const acts = document.createElement("div");
+    acts.className = "acts";
+    actions.forEach(([label, fn, cls]) => {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = cls || "link"; b.textContent = label;
+      b.addEventListener("click", fn);
+      acts.appendChild(b);
+    });
+    li.append(info, acts);
+    return li;
+  }
+
+  function renderLocal() {
+    const ul = $("#lib-local");
+    ul.innerHTML = "";
+    const ids = Object.keys(lib.songs).sort((a, b) => lib.songs[b].updated - lib.songs[a].updated);
+    let shown = 0;
+    ids.forEach(id => {
+      const { song, updated } = lib.songs[id];
+      const title = (song.title || "").trim() || "Sans titre";
+      if (!matches(title, song.artist || "")) return;
+      shown++;
+      const meta = [song.artist, `${(song.structure || []).length} parties`, `modifié le ${fmtDate(updated)}`].filter(Boolean).join("  ·  ");
+      const cur = id === state.id;
+      ul.appendChild(libRow(title + (cur ? "  (en cours)" : ""), meta, [
+        ["Ouvrir", () => { loadSong(M.normalize(clone(lib.songs[id].song)), id); setTab("grids"); }, "btn small"],
+        ["Dupliquer", () => {
+          const c = clone(lib.songs[id].song); c.title = `${c.title || "Sans titre"} (copie)`;
+          const nid = uid(); lib.songs[nid] = { song: c, updated: Date.now() }; writeLib(); renderLocal();
+        }],
+        ["Supprimer", () => deleteLocal(id), "link danger"],
+      ], cur));
+    });
+    if (!shown) {
+      const li = document.createElement("li"); li.className = "none";
+      li.textContent = ids.length ? "Aucun morceau ne correspond à la recherche." : "Aucun morceau pour l'instant.";
+      ul.appendChild(li);
+    }
+  }
+
+  function deleteLocal(id) {
+    const title = lib.songs[id].song.title || "Sans titre";
+    if (!confirm(`Supprimer « ${title} » de cet appareil ? Cette action est définitive.`)) return;
+    delete lib.songs[id];
+    if (id === state.id) {
+      const next = Object.keys(lib.songs).sort((a, b) => lib.songs[b].updated - lib.songs[a].updated)[0];
+      if (next) loadSong(M.normalize(clone(lib.songs[next].song)), next);
+      else loadSong(M.defaultSong());
+    }
+    writeLib();
+    renderLocal();
+    toast(`« ${title} » supprimé`);
+  }
+
+  // --------------------------------------------------------------- morceaux : bibliothèque en ligne
+  let online = null;
+  async function loadOnline(force) {
+    const msg = $("#lib-online-msg");
+    if (!online || force) {
+      msg.textContent = "Chargement…";
+      try {
+        const r = await fetch("bibliotheque/index.json", { cache: "no-cache" });
+        if (!r.ok) throw new Error(r.status);
+        online = await r.json();
+        msg.textContent = "";
+      } catch (e) {
+        online = [{ file: null, title: G.EXAMPLE.title, artist: G.EXAMPLE.artist, key: G.EXAMPLE.key, parts: G.EXAMPLE.structure.length }];
+        msg.textContent = "La bibliothèque en ligne n'est lisible qu'une fois le site publié (ou via un petit serveur local). Seul l'exemple intégré est affiché.";
+      }
+    }
+    renderOnline();
+  }
+
+  async function fetchOnline(item) {
+    if (!item.file) return M.normalize(clone(G.EXAMPLE));
+    const r = await fetch("bibliotheque/" + encodeURIComponent(item.file), { cache: "no-cache" });
+    if (!r.ok) throw new Error(r.status);
+    return M.normalize(await r.json());
+  }
+
+  function renderOnline() {
+    const ul = $("#lib-online");
+    ul.innerHTML = "";
+    const list = (online || []).filter(it => matches(it.title, it.artist));
+    list.forEach(it => {
+      const meta = [it.artist, it.key && `en ${it.key}`, `${it.parts} parties`].filter(Boolean).join("  ·  ");
+      ul.appendChild(libRow(it.title, meta, [
+        ["Ouvrir une copie", async () => {
+          try {
+            const dup = addAndOpen(await fetchOnline(it));
+            setTab("grids");
+            toast(dup ? `« ${it.title} » était déjà sur cet appareil` : `« ${it.title} » ajouté à tes morceaux`);
+          } catch (e) { toast("Impossible de charger ce morceau."); }
+        }, "btn small"],
+        ["PDF", async () => {
+          try {
+            const doc = G.PDF.render(await fetchOnline(it), state.orient);
+            doc.save(`${it.title} - ${state.orient === "landscape" ? "paysage" : "portrait"}.pdf`);
+          } catch (e) { toast("Impossible de générer ce PDF."); }
+        }],
+      ]));
+    });
+    if (online && !list.length) {
+      const li = document.createElement("li"); li.className = "none";
+      li.textContent = online.length ? "Aucun morceau ne correspond à la recherche." : "La bibliothèque est vide.";
+      ul.appendChild(li);
+    }
+  }
+
+  function contribLink() {
+    const el = $("#lib-contrib");
+    const host = location.hostname;
+    if (host.endsWith(".github.io")) {
+      const owner = host.split(".")[0];
+      const repo = location.pathname.split("/").filter(Boolean)[0];
+      if (repo) {
+        el.innerHTML = `Pour publier un morceau : <em>Enregistrer en .grille</em>, puis <a target="_blank" rel="noopener"></a>. La liste se met à jour en une minute environ.`;
+        const a = el.querySelector("a");
+        a.href = `https://github.com/${owner}/${repo}/upload/main/bibliotheque`;
+        a.textContent = "dépose le fichier dans le dossier bibliotheque sur GitHub";
+        return;
+      }
+    }
+    el.innerHTML = "Pour publier un morceau : <em>Enregistrer en .grille</em>, puis ajoute le fichier au dossier <code>bibliotheque/</code> du repo.";
+  }
+
+  // --------------------------------------------------------------- lien de partage
+  const b64u = bytes => { let s = ""; bytes.forEach(b => s += String.fromCharCode(b)); return btoa(s).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, ""); };
+  const unb64u = str => { str = str.replace(/-/g, "+").replace(/_/g, "/"); while (str.length % 4) str += "="; return Uint8Array.from(atob(str), c => c.charCodeAt(0)); };
+  async function pipe(bytes, Stream) {
+    return new Uint8Array(await new Response(new Blob([bytes]).stream().pipeThrough(new Stream("deflate-raw"))).arrayBuffer());
+  }
+  function compact(song) {
+    const c = clone(song), d = M.newCell();
+    c.sections.forEach(s => s.rows.forEach(r => r.forEach(cell => {
+      Object.keys(d).forEach(k => { if (cell[k] === d[k]) delete cell[k]; });
+    })));
+    return c;
+  }
+  async function shareLink() {
+    const bytes = new TextEncoder().encode(JSON.stringify(compact(state.song)));
+    let hash;
+    if (window.CompressionStream) hash = "g=" + b64u(await pipe(bytes, CompressionStream));
+    else hash = "j=" + b64u(bytes);
+    return `${location.origin}${location.pathname}#${hash}`;
+  }
+  async function copyShare() {
+    const url = await shareLink();
+    try {
+      await navigator.clipboard.writeText(url);
+      toast("Lien copié : la personne qui l'ouvre récupère ce morceau.");
+    } catch (e) {
+      prompt("Copie ce lien :", url);
+    }
+  }
+  async function readShareHash() {
+    const h = location.hash.slice(1);
+    if (!/^[gj]=/.test(h)) return false;
+    try {
+      let bytes = unb64u(h.slice(2));
+      if (h[0] === "g") bytes = await pipe(bytes, DecompressionStream);
+      const song = M.normalize(JSON.parse(new TextDecoder().decode(bytes)));
+      const dup = addAndOpen(song);
+      toast(dup ? `« ${song.title || "Morceau"} » était déjà dans tes morceaux` : `« ${song.title || "Morceau partagé"} » ajouté à tes morceaux`);
+    } catch (e) {
+      toast("Ce lien de partage est incomplet ou abîmé.");
+    }
+    history.replaceState(null, "", location.pathname + location.search);
+    return true;
   }
 
   // --------------------------------------------------------------- init
@@ -491,12 +709,17 @@
     $("#b-open").addEventListener("click", () => $("#file-input").click());
     $("#file-input").addEventListener("change", e => { if (e.target.files[0]) openFile(e.target.files[0]); e.target.value = ""; });
     $("#b-new").addEventListener("click", () => {
-      if (confirm("Commencer un nouveau morceau ? Pense à enregistrer le .grille actuel si tu veux le garder.")) loadSong(M.defaultSong());
+      clearTimeout(saveTimer);
+      if (state.id) { lib.songs[state.id] = { song: state.song, updated: Date.now() }; }
+      loadSong(M.defaultSong());
+      setTab("grids");
+      $("#f-title").focus();
+      toast("Nouveau morceau. Le précédent reste dans l'onglet Morceaux.");
     });
-    $("#b-example").addEventListener("click", () => {
-      if (confirm("Charger l'exemple Sultans of Swing à la place du morceau actuel ?"))
-        loadSong(M.normalize(JSON.parse(JSON.stringify(G.EXAMPLE))));
-    });
+    $("#b-share").addEventListener("click", copyShare);
+    $("#lib-filter").addEventListener("input", () => { renderLocal(); renderOnline(); });
+    contribLink();
+    window.addEventListener("hashchange", () => { readShareHash().then(ok => ok && setTab("grids")); });
 
     $("#b-add-section").addEventListener("click", addSection);
     $("#b-dup").addEventListener("click", dupSection);
@@ -540,10 +763,13 @@
       if (f) openFile(f);
     });
 
-    const song = loadInitial();
+    readStorage();
     setOrient(state.orient);
-    loadSong(song);
+    const cur = lib.current && lib.songs[lib.current];
+    if (cur) loadSong(M.normalize(clone(cur.song)), lib.current);
+    else loadSong(M.normalize(clone(G.EXAMPLE)));
     setTab(state.tab);
+    readShareHash().then(ok => ok && setTab("grids"));
   }
 
   document.addEventListener("DOMContentLoaded", init);

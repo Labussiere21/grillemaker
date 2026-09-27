@@ -23,6 +23,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
+      - name: Construire l'index de la bibliothèque
+        run: python3 scripts/build_index.py
       - uses: actions/upload-pages-artifact@v3
         with:
           path: .

@@ -41,6 +41,18 @@ puis http://localhost:8000
 - Générateur : nombre d'intros, couplets, refrains, solos… → numérotation automatique, chaque partie reliée à sa grille.
 - Clique une partie pour la renommer (« Refrain de fin »), changer la grille jouée, forcer les mesures, ajouter une note ou la déplacer.
 
+**Morceaux**
+- *Sur cet appareil* : chaque morceau créé ou ouvert est gardé automatiquement dans le navigateur (ouvrir, dupliquer, supprimer).
+- *Bibliothèque en ligne* : les fichiers `.grille` du dossier `bibliotheque/` du repo. « Ouvrir une copie » l'ajoute à tes morceaux, « PDF » le télécharge directement.
+- *Copier le lien de partage* : le morceau est encodé dans l'adresse. La personne qui ouvre le lien le récupère dans ses morceaux, sans rien stocker en ligne.
+
+**Publier un morceau dans la bibliothèque**
+1. Dans l'app : *Enregistrer en .grille*.
+2. Sur GitHub : dossier `bibliotheque/` → *Add file* → *Upload files* → dépose le fichier → *Commit changes*.
+3. La GitHub Action régénère `bibliotheque/index.json` et republie le site (environ une minute).
+
+Pour retirer un morceau : supprime son fichier dans `bibliotheque/` sur GitHub.
+
 **Fichiers**
 - *Enregistrer en .grille* télécharge le morceau (JSON) ; *Ouvrir un .grille* ou glisser-déposer pour le recharger.
 - Format compatible avec la version bureau de GrilleMaker.
@@ -54,6 +66,7 @@ js/model.js           données, calcul des mesures, générateur de structure
 js/pdf.js             rendu PDF (jsPDF)
 js/app.js             interface
 js/example.js         exemple Sultans of Swing intégré
-examples/             exemples .grille
+bibliotheque/         morceaux publiés (.grille) + index.json généré
+scripts/build_index.py    génère bibliotheque/index.json (lancé par la GitHub Action)
 vendor/jspdf.umd.min.js   jsPDF 2.5.2 (MIT), embarqué pour fonctionner hors ligne
 ```

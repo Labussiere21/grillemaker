@@ -27,6 +27,7 @@
       <button type="button" data-orient="portrait" role="radio">Portrait</button>
       <button type="button" data-orient="landscape" role="radio">Paysage</button>
     </div>
+    <button type="button" id="b-share" class="btn">Copier le lien de partage</button>
     <button type="button" id="b-preview" class="btn">Aperçu</button>
     <button type="button" id="b-pdf" class="btn primary">Télécharger le PDF</button>
   </div>
@@ -36,12 +37,12 @@
   <div class="tabs" role="tablist">
     <button type="button" role="tab" data-tab="grids" class="tab">Grilles</button>
     <button type="button" role="tab" data-tab="structure" class="tab">Structure <span id="t-total" class="pill"></span></button>
+    <button type="button" role="tab" data-tab="library" class="tab">Morceaux</button>
   </div>
   <div class="file">
-    <button type="button" id="b-new" class="link">Nouveau</button>
+    <button type="button" id="b-new" class="link">Nouveau morceau</button>
     <button type="button" id="b-open" class="link">Ouvrir un .grille</button>
     <button type="button" id="b-save" class="link">Enregistrer en .grille</button>
-    <button type="button" id="b-example" class="link">Exemple</button>
     <input type="file" id="file-input" accept=".grille,.json,application/json" hidden>
   </div>
 </nav>
@@ -143,6 +144,26 @@
         <button type="button" id="b-generate" class="btn primary wide">Générer</button>
       </div>
     </aside>
+  </section>
+  <!-- ======================= MORCEAUX ======================= -->
+  <section id="tab-library" class="panel library" hidden>
+    <div class="lib-search">
+      <input id="lib-filter" type="search" placeholder="Chercher un titre ou un artiste" aria-label="Chercher un morceau">
+    </div>
+    <div class="lib-cols">
+      <div class="lib-col">
+        <h2>Sur cet appareil</h2>
+        <p class="hint">Chaque morceau que tu crées ou ouvres est gardé ici automatiquement, dans ce navigateur.</p>
+        <ul id="lib-local" class="lib-list"></ul>
+      </div>
+      <div class="lib-col">
+        <h2>Bibliothèque en ligne</h2>
+        <p class="hint">Les grilles publiées dans le dossier <code>bibliotheque/</code> du repo. Ouvrir en crée une copie modifiable sur cet appareil.</p>
+        <ul id="lib-online" class="lib-list"></ul>
+        <p id="lib-online-msg" class="hint"></p>
+        <p class="hint" id="lib-contrib"></p>
+      </div>
+    </div>
   </section>
 </main>
 
