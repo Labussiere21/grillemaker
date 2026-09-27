@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>GrilleMaker — grilles d'accords</title>
+<meta name="description" content="Crée tes grilles d'accords (reprises, cases 1./2., structure du morceau) et exporte-les en PDF.">
+<link rel="icon" href="icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="top">
+  <div class="song">
+    <input id="f-title" class="song-title" placeholder="Titre du morceau" aria-label="Titre" autocomplete="off">
+    <div class="song-meta">
+      <label>Artiste <input id="f-artist" size="16" autocomplete="off"></label>
+      <label>Tonalité <input id="f-key" size="4" autocomplete="off"></label>
+      <label>Tempo <input id="f-tempo" size="5" autocomplete="off"></label>
+      <label class="grow">Note de fin <input id="f-notes" placeholder="ex. Fin sur Dm" autocomplete="off"></label>
+    </div>
+  </div>
+  <div class="export">
+    <div class="seg" role="radiogroup" aria-label="Orientation du PDF">
+      <button type="button" data-orient="portrait" role="radio">Portrait</button>
+      <button type="button" data-orient="landscape" role="radio">Paysage</button>
+    </div>
+    <button type="button" id="b-preview" class="btn">Aperçu</button>
+    <button type="button" id="b-pdf" class="btn primary">Télécharger le PDF</button>
+  </div>
+</header>
+
+<nav class="bar">
+  <div class="tabs" role="tablist">
+    <button type="button" role="tab" data-tab="grids" class="tab">Grilles</button>
+    <button type="button" role="tab" data-tab="structure" class="tab">Structure <span id="t-total" class="pill"></span></button>
+  </div>
+  <div class="file">
+    <button type="button" id="b-new" class="link">Nouveau</button>
+    <button type="button" id="b-open" class="link">Ouvrir un .grille</button>
+    <button type="button" id="b-save" class="link">Enregistrer en .grille</button>
+    <button type="button" id="b-example" class="link">Exemple</button>
+    <input type="file" id="file-input" accept=".grille,.json,application/json" hidden>
+  </div>
+</nav>
+
+<main>
+  <!-- ======================= GRILLES ======================= -->
+  <section id="tab-grids" class="panel grids">
+    <aside class="sections">
+      <ol id="section-list" class="section-list"></ol>
+      <div class="add-row">
+        <select id="new-type" aria-label="Type de section"></select>
+        <button type="button" id="b-add-section" class="btn small">Ajouter</button>
+      </div>
+      <div class="sec-actions">
+        <button type="button" id="b-dup" class="link">Dupliquer</button>
+        <button type="button" id="b-del" class="link danger">Supprimer</button>
+        <button type="button" id="b-up" class="icon" aria-label="Monter">↑</button>
+        <button type="button" id="b-down" class="icon" aria-label="Descendre">↓</button>
+      </div>
+    </aside>
+
+    <div class="editor" id="editor">
+      <div class="sec-head">
+        <label>Section <select id="s-type"></select></label>
+        <label>N° <input id="s-num" type="number" min="0" max="30"></label>
+        <label>Nom perso <input id="s-label" placeholder="ex. Refrain de fin" size="14"></label>
+        <label>Cellules / ligne <input id="s-cols" type="number" min="1" max="8"></label>
+        <label>Lignes <input id="s-rows" type="number" min="1" max="24"></label>
+      </div>
+
+      <div class="tools" aria-label="Actions sur la case sélectionnée">
+        <button type="button" data-act="start" class="tool" title="Début de reprise">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="3" height="18"/><rect x="9" y="3" width="1.4" height="18"/><circle cx="14" cy="9" r="1.7"/><circle cx="14" cy="15" r="1.7"/></svg>
+          Début reprise</button>
+        <button type="button" data-act="end" class="tool" title="Fin de reprise">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="9" r="1.7"/><circle cx="10" cy="15" r="1.7"/><rect x="13.6" y="3" width="1.4" height="18"/><rect x="17" y="3" width="3" height="18"/></svg>
+          Fin reprise</button>
+        <label class="times">Répéter ×<input id="t-times" type="number" min="2" max="64" value="2"></label>
+        <button type="button" data-act="v1" class="tool">Case 1.</button>
+        <button type="button" data-act="v2" class="tool">Case 2.</button>
+        <button type="button" data-act="sim" class="tool" title="Même mesure que la précédente">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 18 18 6" stroke="currentColor" stroke-width="2.6"/><circle cx="7" cy="9" r="1.8"/><circle cx="17" cy="15" r="1.8"/></svg>
+          Même mesure</button>
+        <button type="button" data-act="clear" class="tool quiet">Vider la case</button>
+      </div>
+
+      <div class="sheet">
+        <div id="grid" class="grid"></div>
+        <div class="side">
+          <div class="meas"><span id="m-value">0</span><small>mesures</small></div>
+          <label class="check"><input type="checkbox" id="m-auto"> Calcul auto</label>
+          <input id="m-manual" type="number" min="0" max="999" aria-label="Mesures (manuel)">
+          <label class="stack">Commentaire<input id="s-comment" placeholder="imprimé sous la grille"></label>
+          <details class="help">
+            <summary>Comment saisir</summary>
+            <p>Deux accords dans une mesure : <kbd>C Bb</kbd> ou <kbd>C, Bb</kbd> (diagonale dans le PDF). <kbd>C/E</kbd> reste un renversement.</p>
+            <p><kbd>%</kbd> = même mesure que la précédente.</p>
+            <p>La petite ligne sous l'accord sert aux indications : rythme, « syncopé »…</p>
+            <p><kbd>Entrée</kbd> ou <kbd>Tab</kbd> : case suivante. Les cases vides en fin de ligne ne sont pas imprimées.</p>
+          </details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= STRUCTURE ======================= -->
+  <section id="tab-structure" class="panel structure" hidden>
+    <div class="flow-wrap">
+      <ol id="flow" class="flow"></ol>
+      <p id="flow-empty" class="empty">Pas encore de structure. Utilise le générateur à droite ou ajoute les parties une par une.</p>
+      <div class="add-row">
+        <select id="item-type" aria-label="Type de partie"></select>
+        <button type="button" id="b-add-item" class="btn small">Ajouter une partie</button>
+        <button type="button" id="b-renum" class="link">Renuméroter</button>
+      </div>
+    </div>
+
+    <aside class="struct-side">
+      <div class="card" id="item-editor">
+        <h3 id="ie-title">Partie sélectionnée</h3>
+        <label class="stack">Nom perso<input id="i-label" placeholder="ex. Refrain de fin"></label>
+        <label class="stack">Grille jouée<select id="i-grid"></select></label>
+        <div class="inline">
+          <label class="check"><input type="checkbox" id="i-auto"> Mesures de la grille</label>
+          <input id="i-meas" type="number" min="0" max="999" aria-label="Mesures">
+        </div>
+        <label class="stack">Note<input id="i-note" placeholder="ex. fin sur Dm"></label>
+        <div class="inline end">
+          <button type="button" id="b-i-up" class="icon" aria-label="Avancer">←</button>
+          <button type="button" id="b-i-down" class="icon" aria-label="Reculer">→</button>
+          <button type="button" id="b-i-del" class="link danger">Retirer</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Générer la structure</h3>
+        <p class="hint">Indique combien de chaque partie. Elles sont numérotées et reliées à leur grille (Couplet 3 joue la grille du Couplet 1 s'il n'y a que deux grilles de couplet).</p>
+        <div id="gen" class="gen"></div>
+        <button type="button" id="b-generate" class="btn primary wide">Générer</button>
+      </div>
+    </aside>
+  </section>
+</main>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script src="vendor/jspdf.umd.min.js"></script>
+<script src="js/model.js"></script>
+<script src="js/example.js"></script>
+<script src="js/pdf.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
