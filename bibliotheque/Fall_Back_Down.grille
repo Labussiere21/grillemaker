@@ -1,0 +1,751 @@
+{
+ "version": 1,
+ "title": "Fall Back Down",
+ "artist": "Rancid",
+ "key": "E",
+ "tempo": "104",
+ "notes": "Accords vérifiés sur les tabs guitare (capo 4). Fills basse = 4e temps en doubles croches, sauf mention.",
+ "sections": [
+  {
+   "id": "3952cefe",
+   "type": "Intro",
+   "num": 0,
+   "label": "",
+   "cols": 4,
+   "rows": [
+    [
+     {
+      "chord": "E F#m",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": "basse : silence"
+     },
+     {
+      "chord": "A E",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": "basse : silence"
+     },
+     {
+      "chord": "E F#m",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": "basse : silence"
+     },
+     {
+      "chord": "A E",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": "entrée fill B C# E C#"
+     }
+    ],
+    [
+     {
+      "chord": "E F#m",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "A E",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": "fill B C# E C#"
+     },
+     {
+      "chord": "E F#m",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "A E",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": "fill B C# E C#"
+     }
+    ]
+   ],
+   "measures_auto": true,
+   "measures": 0,
+   "comment": "Guitare en son clair, la basse entre sur le fill de la 4e mesure"
+  },
+  {
+   "id": "c0475a21",
+   "type": "Couplet",
+   "num": 1,
+   "label": "",
+   "cols": 4,
+   "rows": [
+    [
+     {
+      "chord": "E",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "F#m",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": "fill E C#"
+     },
+     {
+      "chord": "A",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": "fill B C#"
+     },
+     {
+      "chord": "E",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": "fill E C# B C#"
+     }
+    ],
+    [
+     {
+      "chord": "E",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "F#m",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": "fill E C#"
+     },
+     {
+      "chord": "A",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": "fill A A#"
+     },
+     {
+      "chord": "B",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": "basse B puis A"
+     }
+    ],
+    [
+     {
+      "chord": "B",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": "descente B A G# F#"
+     },
+     {
+      "chord": "",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     }
+    ]
+   ],
+   "measures_auto": true,
+   "measures": 0,
+   "comment": ""
+  },
+  {
+   "id": "e497a0e2",
+   "type": "Refrain",
+   "num": 1,
+   "label": "",
+   "cols": 4,
+   "rows": [
+    [
+     {
+      "chord": "E F#m",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "A E",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": "fill E C# B C#"
+     },
+     {
+      "chord": "E F#m",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "A E",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": "fill B C# E C#"
+     }
+    ],
+    [
+     {
+      "chord": "E F#m",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "A E",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": "fill E C# B C#"
+     },
+     {
+      "chord": "E F#m",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "A E",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": "fill A B B#"
+     }
+    ]
+   ],
+   "measures_auto": true,
+   "measures": 0,
+   "comment": ""
+  },
+  {
+   "id": "effd2f35",
+   "type": "Pont",
+   "num": 0,
+   "label": "",
+   "cols": 4,
+   "rows": [
+    [
+     {
+      "chord": "C#m",
+      "start": true,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "E",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": "fill G A A#"
+     },
+     {
+      "chord": "B",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "A",
+      "start": false,
+      "end": true,
+      "times": 2,
+      "volta": "",
+      "note": "fill mesure entière"
+     }
+    ]
+   ],
+   "measures_auto": true,
+   "measures": 0,
+   "comment": ""
+  },
+  {
+   "id": "1db591d3",
+   "type": "Solo",
+   "num": 1,
+   "label": "",
+   "cols": 4,
+   "rows": [
+    [
+     {
+      "chord": "E F#m",
+      "start": true,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "A E",
+      "start": false,
+      "end": true,
+      "times": 4,
+      "volta": "",
+      "note": "fill B C# E C#"
+     },
+     {
+      "chord": "",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     }
+    ]
+   ],
+   "measures_auto": true,
+   "measures": 0,
+   "comment": ""
+  },
+  {
+   "id": "c1ed45e8",
+   "type": "Solo",
+   "num": 3,
+   "label": "",
+   "cols": 4,
+   "rows": [
+    [
+     {
+      "chord": "E F#m",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "A E",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": "fill E C# B C#"
+     },
+     {
+      "chord": "E F#m",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "A E",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": "fill E C# B C#"
+     }
+    ],
+    [
+     {
+      "chord": "E F#m",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "A E",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": "fill B C# E C#"
+     },
+     {
+      "chord": "E F#m",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "A E",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": "fill mesure entière"
+     }
+    ]
+   ],
+   "measures_auto": true,
+   "measures": 0,
+   "comment": ""
+  },
+  {
+   "id": "fe17ee27",
+   "type": "Refrain",
+   "num": 0,
+   "label": "Refrain final",
+   "cols": 4,
+   "rows": [
+    [
+     {
+      "chord": "E F#m",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": "stop"
+     },
+     {
+      "chord": "A E",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": "stop + fill B C# E C#"
+     },
+     {
+      "chord": "E F#m",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": "stop"
+     },
+     {
+      "chord": "A E",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": "stop + fill B C# E C#"
+     }
+    ],
+    [
+     {
+      "chord": "E F#m",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "A E",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": "fill E C# B C#"
+     },
+     {
+      "chord": "E F#m",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "A E",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": "fill mesure entière"
+     }
+    ],
+    [
+     {
+      "chord": "E F#m",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "A E",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": "fill E C# B C#"
+     },
+     {
+      "chord": "E F#m",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "A E",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": "fill B C# E C#"
+     }
+    ],
+    [
+     {
+      "chord": "E F#m",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "A E",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": "fill E C# B C#"
+     },
+     {
+      "chord": "E F#m",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "A E",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": "fill mesure entière"
+     }
+    ]
+   ],
+   "measures_auto": true,
+   "measures": 0,
+   "comment": "Stops : 2 croches puis silence sur chaque accord"
+  },
+  {
+   "id": "b9ad0aa8",
+   "type": "Outro",
+   "num": 0,
+   "label": "",
+   "cols": 4,
+   "rows": [
+    [
+     {
+      "chord": "E",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": "tenu"
+     },
+     {
+      "chord": "%",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "%",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "%",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     }
+    ]
+   ],
+   "measures_auto": true,
+   "measures": 0,
+   "comment": ""
+  }
+ ],
+ "structure": [
+  {
+   "type": "Intro",
+   "num": 0,
+   "label": "",
+   "grid": "3952cefe",
+   "measures_auto": true,
+   "measures": 0,
+   "note": ""
+  },
+  {
+   "type": "Couplet",
+   "num": 1,
+   "label": "",
+   "grid": "c0475a21",
+   "measures_auto": true,
+   "measures": 0,
+   "note": ""
+  },
+  {
+   "type": "Refrain",
+   "num": 1,
+   "label": "",
+   "grid": "e497a0e2",
+   "measures_auto": true,
+   "measures": 0,
+   "note": ""
+  },
+  {
+   "type": "Pont",
+   "num": 0,
+   "label": "",
+   "grid": "effd2f35",
+   "measures_auto": true,
+   "measures": 0,
+   "note": ""
+  },
+  {
+   "type": "Solo",
+   "num": 1,
+   "label": "",
+   "grid": "1db591d3",
+   "measures_auto": true,
+   "measures": 0,
+   "note": ""
+  },
+  {
+   "type": "Couplet",
+   "num": 2,
+   "label": "",
+   "grid": "c0475a21",
+   "measures_auto": true,
+   "measures": 0,
+   "note": ""
+  },
+  {
+   "type": "Refrain",
+   "num": 2,
+   "label": "",
+   "grid": "e497a0e2",
+   "measures_auto": true,
+   "measures": 0,
+   "note": ""
+  },
+  {
+   "type": "Solo",
+   "num": 2,
+   "label": "",
+   "grid": "effd2f35",
+   "measures_auto": true,
+   "measures": 0,
+   "note": ""
+  },
+  {
+   "type": "Refrain",
+   "num": 3,
+   "label": "Refrain final",
+   "grid": "fe17ee27",
+   "measures_auto": true,
+   "measures": 0,
+   "note": ""
+  },
+  {
+   "type": "Solo",
+   "num": 3,
+   "label": "",
+   "grid": "c1ed45e8",
+   "measures_auto": true,
+   "measures": 0,
+   "note": ""
+  },
+  {
+   "type": "Outro",
+   "num": 0,
+   "label": "",
+   "grid": "b9ad0aa8",
+   "measures_auto": true,
+   "measures": 0,
+   "note": ""
+  }
+ ]
+}
