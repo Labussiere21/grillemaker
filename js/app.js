@@ -70,7 +70,7 @@
 
   const fileBase = () => (state.song.title.trim() || "grille").replace(/[\\/:*?"<>|]+/g, "-");
   const cur = () => state.song.sections[state.sec] || null;
-  const changed = () => { persist(); refreshCounts(); };
+  const changed = () => { persist(); refreshCounts(); record(); };
 
   function download(blob, name) {
     const a = document.createElement("a");
@@ -79,6 +79,54 @@
     document.body.appendChild(a);
     a.click();
     setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+  }
+
+
+  // --------------------------------------------------------------- annuler / rétablir
+  const hist = { stack: [], i: -1 };
+  let histTimer = null;
+  function updUndo() {
+    $("#b-undo").disabled = hist.i <= 0;
+    $("#b-redo").disabled = hist.i >= hist.stack.length - 1;
+  }
+  function histReset() {
+    clearTimeout(histTimer);
+    hist.stack = [JSON.stringify(state.song)];
+    hist.i = 0;
+    updUndo();
+  }
+  function histCommit() {
+    clearTimeout(histTimer);
+    histTimer = null;
+    const j = JSON.stringify(state.song);
+    if (j === hist.stack[hist.i]) return;
+    hist.stack = hist.stack.slice(0, hist.i + 1);
+    hist.stack.push(j);
+    if (hist.stack.length > 200) hist.stack.shift();
+    hist.i = hist.stack.length - 1;
+    updUndo();
+  }
+  // les frappes rapprochées sont regroupées en une seule étape
+  function record() { clearTimeout(histTimer); histTimer = setTimeout(histCommit, 450); updUndoSoon(); }
+  function updUndoSoon() { $("#b-undo").disabled = false; }
+  function histRestore() {
+    const secId = cur() && cur().id;
+    state.song = M.normalize(JSON.parse(hist.stack[hist.i]));
+    ["title", "artist", "key", "tempo", "notes"].forEach(k => { $("#f-" + k).value = state.song[k] || ""; });
+    const idx = state.song.sections.findIndex(s => s.id === secId);
+    state.sec = idx >= 0 ? idx : Math.min(state.sec, state.song.sections.length - 1);
+    if (state.item >= state.song.structure.length) state.item = state.song.structure.length - 1;
+    renderAll();
+    persist();
+    updUndo();
+  }
+  function undo() {
+    histCommit();
+    if (hist.i > 0) { hist.i--; histRestore(); }
+  }
+  function redo() {
+    histCommit();
+    if (hist.i < hist.stack.length - 1) { hist.i++; histRestore(); }
   }
 
   // --------------------------------------------------------------- chargement
@@ -95,6 +143,7 @@
     $("#f-notes").value = song.notes || "";
     renderAll();
     persist();
+    histReset();
   }
 
   function renderAll() {
@@ -149,9 +198,15 @@
     });
     const s = cur();
     if (s) {
+      const forced = s.measures_auto === false;
       $("#m-value").textContent = M.sectionMeasures(s);
-      $("#m-manual").disabled = s.measures_auto !== false;
-      if (s.measures_auto !== false) $("#m-manual").value = M.computeMeasures(s);
+      $("#m-force").checked = forced;
+      $("#m-manual").hidden = !forced;
+      const d = M.measureDetail(s);
+      const reps = d.reps.map(r => `${r.len} mesure${r.len > 1 ? "s" : ""} jouée${r.len > 1 ? "s" : ""} <b>${r.times} fois</b>${r.v1 ? ` (+ case 1. à chaque passage sauf le dernier)` : ""}`);
+      $("#m-detail").innerHTML = forced
+        ? `Calcul automatique : ${M.computeMeasures(s)} mesures (ignoré, nombre forcé).`
+        : `${d.written} case${d.written > 1 ? "s" : ""} écrite${d.written > 1 ? "s" : ""}` + (reps.length ? `, dont reprise${reps.length > 1 ? "s" : ""} : ${reps.join(" ; ")}.` : ", aucune reprise.");
     }
     const total = state.song.structure.reduce((a, it) => a + M.itemMeasures(state.song, it), 0);
     $("#t-total").textContent = state.song.structure.length ? `${total} M` : "";
@@ -197,7 +252,6 @@
     $("#s-cols").value = s.cols;
     $("#s-rows").value = s.rows.length;
     $("#s-comment").value = s.comment || "";
-    $("#m-auto").checked = s.measures_auto !== false;
     $("#m-manual").value = s.measures_auto !== false ? M.computeMeasures(s) : s.measures;
 
     grid.style.gridTemplateColumns = `auto repeat(${s.cols}, max-content)`;
@@ -252,13 +306,24 @@
     if (!el) return;
     el.classList.add("selected");
     const c = cell(r, k);
-    $("#t-times").value = parseInt(c.times) || 2;
+    refreshTimes();
     $$(".tool[data-act]").forEach(b => {
       const a = b.dataset.act;
       const on = (a === "start" && c.start) || (a === "end" && c.end) || (a === "v1" && c.volta === "1") || (a === "v2" && c.volta === "2");
       if (["start", "end", "v1", "v2"].includes(a)) b.setAttribute("aria-pressed", String(on));
     });
     if (focus) { const i = el.querySelector(".chord"); i.focus(); i.select(); }
+  }
+
+  function refreshTimes() {
+    const s = cur(); if (!s) return;
+    const end = M.findRepeatEnd(s, ...state.sel);
+    const inp = $("#t-times");
+    inp.disabled = !end;
+    $("#times-wrap").classList.toggle("off", !end);
+    $("#times-wrap").title = end ? "Nombre de fois que cette reprise est jouée"
+      : "Sélectionne une case entre ‖: et :‖ pour régler le nombre de passages";
+    if (end) inp.value = parseInt(cell(...end).times) || 2;
   }
 
   function move(d) {
@@ -278,7 +343,7 @@
     const [r, k] = state.sel;
     const c = cell(r, k);
     if (a === "start") c.start = !c.start;
-    if (a === "end") { c.end = !c.end; if (c.end) c.times = parseInt($("#t-times").value) || 2; }
+    if (a === "end") { c.end = !c.end; if (c.end && !c.times) c.times = 2; }
     if (a === "v1") c.volta = c.volta === "1" ? "" : "1";
     if (a === "v2") c.volta = c.volta === "2" ? "" : "2";
     if (a === "clear") Object.assign(c, M.newCell());
@@ -462,16 +527,35 @@
 
   function exportPdf() {
     const doc = makePdf(); if (!doc) return;
-    const name = `${fileBase()} - ${state.orient === "landscape" ? "paysage" : "portrait"}.pdf`;
+    const name = pdfName();
     doc.save(name);
     toast(`PDF téléchargé : ${name}`);
   }
 
+  function pdfName() {
+    return `${fileBase()} - ${state.orient === "landscape" ? "paysage" : "portrait"}.pdf`;
+  }
+
   function previewPdf() {
     const doc = makePdf(); if (!doc) return;
-    const url = doc.output("bloburl");
-    const w = window.open(url, "_blank");
-    if (!w) toast("Autorise les fenêtres pop-up pour voir l'aperçu.");
+    const w = window.open("", "_blank");
+    if (!w) { toast("Autorise les fenêtres pop-up pour voir l'aperçu."); return; }
+    const name = pdfName();
+    const url = URL.createObjectURL(new Blob([doc.output("arraybuffer")], { type: "application/pdf" }));
+    // Le bouton de téléchargement du lecteur PDF de Chrome échoue sur ce type d'adresse
+    // (« Vérifiez votre connexion Internet ») : l'aperçu a donc son propre bouton.
+    w.document.write(`<!doctype html><html lang="fr"><head><meta charset="utf-8"><title></title>
+<style>html,body{margin:0;height:100%;font-family:system-ui,sans-serif;background:#525659}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 16px;background:#5b3a8c;color:#fff}
+.bar a{background:#fff;color:#5b3a8c;font-weight:600;text-decoration:none;padding:8px 16px;border-radius:6px}
+iframe{border:0;width:100%;height:calc(100% - 56px);display:block}</style></head>
+<body><div class="bar"><span></span><a download>Télécharger le PDF</a></div><iframe></iframe></body></html>`);
+    w.document.close();
+    w.document.title = name;
+    w.document.querySelector(".bar span").textContent = name;
+    const a = w.document.querySelector("a");
+    a.href = url; a.download = name;
+    w.document.querySelector("iframe").src = url;
   }
 
   function saveFile() {
@@ -531,15 +615,15 @@
       if (!matches(title, song.artist || "")) return;
       shown++;
       const meta = [song.artist, `${(song.structure || []).length} parties`, `modifié le ${fmtDate(updated)}`].filter(Boolean).join("  ·  ");
-      const cur = id === state.id;
-      ul.appendChild(libRow(title + (cur ? "  (en cours)" : ""), meta, [
+      const isCur = id === state.id;
+      ul.appendChild(libRow(title + (isCur ? "  (en cours)" : ""), meta, [
         ["Ouvrir", () => { loadSong(M.normalize(clone(lib.songs[id].song)), id); setTab("grids"); }, "btn small"],
         ["Dupliquer", () => {
           const c = clone(lib.songs[id].song); c.title = `${c.title || "Sans titre"} (copie)`;
           const nid = uid(); lib.songs[nid] = { song: c, updated: Date.now() }; writeLib(); renderLocal();
         }],
         ["Supprimer", () => deleteLocal(id), "link danger"],
-      ], cur));
+      ], isCur));
     });
     if (!shown) {
       const li = document.createElement("li"); li.className = "none";
@@ -698,7 +782,7 @@
     });
 
     ["title", "artist", "key", "tempo", "notes"].forEach(k => {
-      $("#f-" + k).addEventListener("input", e => { state.song[k] = e.target.value; persist(); });
+      $("#f-" + k).addEventListener("input", e => { state.song[k] = e.target.value; persist(); record(); });
     });
 
     $$(".tab").forEach(b => b.addEventListener("click", () => setTab(b.dataset.tab)));
@@ -717,6 +801,16 @@
       toast("Nouveau morceau. Le précédent reste dans l'onglet Morceaux.");
     });
     $("#b-share").addEventListener("click", copyShare);
+    $("#b-undo").addEventListener("click", undo);
+    $("#b-redo").addEventListener("click", redo);
+    document.addEventListener("keydown", e => {
+      if (!(e.ctrlKey || e.metaKey) || e.altKey) return;
+      const k = e.key.toLowerCase();
+      if (k !== "z" && k !== "y") return;
+      // même dans un champ : l'annulation de l'app reste cohérente avec la grille et le PDF
+      e.preventDefault();
+      if (k === "y" || (k === "z" && e.shiftKey)) redo(); else undo();
+    });
     $("#lib-filter").addEventListener("input", () => { renderLocal(); renderOnline(); });
     contribLink();
     window.addEventListener("hashchange", () => { readShareHash().then(ok => ok && setTab("grids")); });
@@ -734,15 +828,19 @@
     });
     $("#t-times").addEventListener("input", () => {
       const s = cur(); if (!s) return;
-      const c = cell(...state.sel);
-      c.times = Math.max(1, parseInt($("#t-times").value) || 2);
-      c.end = true;
-      decorate(cellEl(...state.sel), c); select(...state.sel); changed();
-    });
-    $("#m-auto").addEventListener("change", () => {
-      const s = cur(); s.measures_auto = $("#m-auto").checked;
-      if (!s.measures_auto) s.measures = parseInt($("#m-manual").value) || M.computeMeasures(s);
+      const end = M.findRepeatEnd(s, ...state.sel);
+      if (!end) return;
+      const c = cell(...end);
+      c.times = Math.max(2, parseInt($("#t-times").value) || 2);
+      decorate(cellEl(...end), c);
       changed();
+    });
+    $("#m-force").addEventListener("change", () => {
+      const s = cur();
+      s.measures_auto = !$("#m-force").checked;
+      if (!s.measures_auto) { s.measures = M.computeMeasures(s); $("#m-manual").value = s.measures; }
+      changed();
+      if (!s.measures_auto) $("#m-manual").focus();
     });
     $("#m-manual").addEventListener("input", () => { const s = cur(); s.measures = parseInt($("#m-manual").value) || 0; changed(); });
 
@@ -765,8 +863,8 @@
 
     readStorage();
     setOrient(state.orient);
-    const cur = lib.current && lib.songs[lib.current];
-    if (cur) loadSong(M.normalize(clone(cur.song)), lib.current);
+    const last = lib.current && lib.songs[lib.current];
+    if (last) loadSong(M.normalize(clone(last.song)), lib.current);
     else loadSong(M.normalize(clone(G.EXAMPLE)));
     setTab(state.tab);
     readShareHash().then(ok => ok && setTab("grids"));
