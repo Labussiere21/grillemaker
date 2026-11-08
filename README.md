@@ -35,7 +35,7 @@ puis http://localhost:8000
 - Case sélectionnée : début / fin de reprise, **Répéter ×** (×8…), cases **1.** / **2.**, `%` même mesure.
 - Petite ligne sous l'accord : indication (rythme, « syncopé »…).
 - Mesures calculées automatiquement (reprises et cases 1./2. comprises), ou forcées à la main.
-- `Entrée` / `Tab` : case suivante. Les cases vides en fin de ligne ne sont pas imprimées.
+- `Entrée` / `Tab` : case suivante. `Ctrl+Z` / `Ctrl+Y` (ou les flèches ↶ ↷) : annuler / rétablir. Les cases vides en fin de ligne ne sont pas imprimées.
 
 **Structure**
 - Générateur : nombre d'intros, couplets, refrains, solos… → numérotation automatique, chaque partie reliée à sa grille.

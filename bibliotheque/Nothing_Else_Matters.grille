@@ -1,0 +1,522 @@
+{
+ "version": 1,
+ "title": "Nothing Else Matters",
+ "artist": "Metallica",
+ "key": "Em",
+ "tempo": "",
+ "notes": "Mesures en 6/8 sauf indication 3/8. D.S. al Coda : retour au Segno (Couplet), puis Outro.",
+ "sections": [
+  {
+   "id": "78376427",
+   "type": "Intro",
+   "num": 0,
+   "label": "",
+   "cols": 4,
+   "rows": [
+    [
+     {
+      "chord": "Em",
+      "start": true,
+      "end": true,
+      "times": 6,
+      "volta": "",
+      "note": "6/8"
+     },
+     {
+      "chord": "Em",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": "mesure en 3/8"
+     },
+     {
+      "chord": "",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     }
+    ],
+    [
+     {
+      "chord": "Am",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": "6/8"
+     },
+     {
+      "chord": "Am",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "C",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "D",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     }
+    ],
+    [
+     {
+      "chord": "Em",
+      "start": true,
+      "end": true,
+      "times": 4,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     }
+    ],
+    [
+     {
+      "chord": "Em",
+      "start": true,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "D C",
+      "start": false,
+      "end": true,
+      "times": 3,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     }
+    ],
+    [
+     {
+      "chord": "G B",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "Em",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "Em",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     }
+    ]
+   ],
+   "measures_auto": true,
+   "measures": 0,
+   "comment": ""
+  },
+  {
+   "id": "de10c6b1",
+   "type": "Couplet",
+   "num": 1,
+   "label": "",
+   "cols": 4,
+   "rows": [
+    [
+     {
+      "chord": "Em",
+      "start": true,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "D C",
+      "start": false,
+      "end": true,
+      "times": 3,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     }
+    ],
+    [
+     {
+      "chord": "G B",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "Em",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     }
+    ]
+   ],
+   "measures_auto": true,
+   "measures": 0,
+   "comment": "Segno : le D.S. revient ici"
+  },
+  {
+   "id": "d6350f69",
+   "type": "Refrain",
+   "num": 1,
+   "label": "",
+   "cols": 4,
+   "rows": [
+    [
+     {
+      "chord": "C A",
+      "start": true,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "D",
+      "start": false,
+      "end": true,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     }
+    ],
+    [
+     {
+      "chord": "C A",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "D",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": "mesure en 3/8"
+     },
+     {
+      "chord": "",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     }
+    ],
+    [
+     {
+      "chord": "Em",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": "6/8"
+     },
+     {
+      "chord": "Em",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": "D.S. al Coda"
+     },
+     {
+      "chord": "",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     }
+    ]
+   ],
+   "measures_auto": true,
+   "measures": 0,
+   "comment": ""
+  },
+  {
+   "id": "94f7d8ce",
+   "type": "Outro",
+   "num": 0,
+   "label": "Outro (Coda)",
+   "cols": 4,
+   "rows": [
+    [
+     {
+      "chord": "Em",
+      "start": true,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "D C",
+      "start": false,
+      "end": true,
+      "times": 3,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     }
+    ],
+    [
+     {
+      "chord": "G B",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "Em",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": "point d'orgue"
+     },
+     {
+      "chord": "",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     },
+     {
+      "chord": "",
+      "start": false,
+      "end": false,
+      "times": 2,
+      "volta": "",
+      "note": ""
+     }
+    ]
+   ],
+   "measures_auto": true,
+   "measures": 0,
+   "comment": ""
+  }
+ ],
+ "structure": [
+  {
+   "type": "Intro",
+   "num": 0,
+   "label": "",
+   "grid": "78376427",
+   "measures_auto": true,
+   "measures": 0,
+   "note": ""
+  },
+  {
+   "type": "Couplet",
+   "num": 1,
+   "label": "",
+   "grid": "de10c6b1",
+   "measures_auto": true,
+   "measures": 0,
+   "note": ""
+  },
+  {
+   "type": "Refrain",
+   "num": 1,
+   "label": "",
+   "grid": "d6350f69",
+   "measures_auto": true,
+   "measures": 0,
+   "note": "D.S."
+  },
+  {
+   "type": "Couplet",
+   "num": 2,
+   "label": "",
+   "grid": "de10c6b1",
+   "measures_auto": true,
+   "measures": 0,
+   "note": ""
+  },
+  {
+   "type": "Refrain",
+   "num": 2,
+   "label": "",
+   "grid": "d6350f69",
+   "measures_auto": true,
+   "measures": 0,
+   "note": "al Coda"
+  },
+  {
+   "type": "Outro",
+   "num": 0,
+   "label": "Outro (Coda)",
+   "grid": "94f7d8ce",
+   "measures_auto": true,
+   "measures": 0,
+   "note": ""
+  }
+ ]
+}

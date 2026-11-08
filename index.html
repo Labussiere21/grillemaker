@@ -40,10 +40,16 @@
     <button type="button" role="tab" data-tab="library" class="tab">Morceaux</button>
   </div>
   <div class="file">
+    <div class="history">
+      <button type="button" id="b-undo" class="icon" title="Annuler (Ctrl+Z)" aria-label="Annuler" disabled>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 7 4 12l5 5M4.5 12H15a5 5 0 0 1 0 10h-3"/></svg></button>
+      <button type="button" id="b-redo" class="icon" title="Rétablir (Ctrl+Y)" aria-label="Rétablir" disabled>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 7 5 5-5 5m4.5-5H9a5 5 0 0 0 0 10h3"/></svg></button>
+    </div>
     <button type="button" id="b-new" class="link">Nouveau morceau</button>
     <button type="button" id="b-open" class="link">Ouvrir un .grille</button>
     <button type="button" id="b-save" class="link">Enregistrer en .grille</button>
-    <input type="file" id="file-input" accept=".grille,.json,application/json" hidden>
+    <input type="file" id="file-input" hidden>
   </div>
 </nav>
 
@@ -80,7 +86,7 @@
         <button type="button" data-act="end" class="tool" title="Fin de reprise">
           <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="9" r="1.7"/><circle cx="10" cy="15" r="1.7"/><rect x="13.6" y="3" width="1.4" height="18"/><rect x="17" y="3" width="3" height="18"/></svg>
           Fin reprise</button>
-        <label class="times">Répéter ×<input id="t-times" type="number" min="2" max="64" value="2"></label>
+        <label class="times" id="times-wrap" title="Nombre de fois que la reprise est jouée">Reprise jouée<input id="t-times" type="number" min="2" max="64" value="2">fois</label>
         <button type="button" data-act="v1" class="tool">Case 1.</button>
         <button type="button" data-act="v2" class="tool">Case 2.</button>
         <button type="button" data-act="sim" class="tool" title="Même mesure que la précédente">
@@ -92,9 +98,10 @@
       <div class="sheet">
         <div id="grid" class="grid"></div>
         <div class="side">
-          <div class="meas"><span id="m-value">0</span><small>mesures</small></div>
-          <label class="check"><input type="checkbox" id="m-auto"> Calcul auto</label>
-          <input id="m-manual" type="number" min="0" max="999" aria-label="Mesures (manuel)">
+          <div class="meas"><span id="m-value">0</span><small>mesures jouées</small></div>
+          <p id="m-detail" class="m-detail"></p>
+          <label class="check"><input type="checkbox" id="m-force"> Forcer un autre nombre</label>
+          <input id="m-manual" type="number" min="0" max="999" aria-label="Nombre de mesures forcé" hidden>
           <label class="stack">Commentaire<input id="s-comment" placeholder="imprimé sous la grille"></label>
           <details class="help">
             <summary>Comment saisir</summary>

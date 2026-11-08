@@ -276,3 +276,15 @@ code { font-size: 12.5px; background: #f1f2f6; border-radius: 4px; padding: 0 4p
   .lib-cols { grid-template-columns: 1fr; }
   .library { padding: 16px; }
 }
+
+.m-detail { margin: -4px 0 4px; font-size: 13px; color: var(--ink-soft); line-height: 1.4; }
+.m-detail b { color: var(--ink); font-weight: 600; }
+.times input:disabled { opacity: .45; }
+#times-wrap.off { opacity: .5; }
+
+.history { display: inline-flex; gap: 4px; margin-right: 8px; }
+.history .icon { display: inline-grid; place-items: center; width: 36px; height: 32px; }
+.history svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.history .icon:not(:disabled):hover { border-color: var(--purple); color: var(--purple); }
+.history .icon:disabled { opacity: .35; cursor: default; }
+.file { align-items: center; }

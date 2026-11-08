@@ -67,6 +67,36 @@
     return total;
   }
 
+  /** Détail lisible : mesures écrites + liste des reprises (longueur, nombre de fois, case 1.) */
+  function measureDetail(s) {
+    let written = 0, inBlock = false, block = 0, v1 = 0;
+    const reps = [];
+    for (const row of usedRows(s)) {
+      for (const c of row) {
+        written++;
+        if (c.start) { inBlock = true; block = 0; v1 = 0; }
+        if (inBlock) {
+          if (c.volta === "1") v1++; else block++;
+          if (c.end) { reps.push({ len: block, times: Math.max(1, parseInt(c.times) || 2), v1 }); inBlock = false; }
+        } else if (c.end) {
+          reps.push({ len: written, times: Math.max(1, parseInt(c.times) || 2), v1: 0 });
+        }
+      }
+    }
+    return { written, reps };
+  }
+
+  /** Case portant la fin de reprise du bloc qui contient (r, k), ou null. */
+  function findRepeatEnd(s, r, k) {
+    const cols = s.cols;
+    for (let i = r * cols + k; i < s.rows.length * cols; i++) {
+      const rr = Math.floor(i / cols), kk = i % cols, c = s.rows[rr][kk];
+      if (c.end) return [rr, kk];
+      if (c.start && i !== r * cols + k) return null;
+    }
+    return null;
+  }
+
   const sectionMeasures = s => s.measures_auto !== false ? computeMeasures(s) : (parseInt(s.measures) || 0);
 
   // ------------------------------------------------------------- structure
@@ -170,7 +200,7 @@
 
   G.Model = {
     SECTION_TYPES, UNNUMBERED, newCell, cellIsEmpty, splitChords, newSection, sectionName,
-    resizeSection, usedRows, computeMeasures, sectionMeasures, newItem, itemName, findSection,
+    resizeSection, usedRows, computeMeasures, measureDetail, findRepeatEnd, sectionMeasures, newItem, itemName, findSection,
     itemMeasures, nextNum, bestGridFor, generateStructure, renumber, newSong, defaultSong,
     normalize, duplicateSection
   };
